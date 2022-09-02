@@ -1,0 +1,56 @@
+aside {
+    flex: 25%;
+    border-right: 2px solid #000;
+    height: 100%;
+    display: flex !important;
+    flex-direction: column;
+    overflow-y: hidden;
+}
+
+.aside__header {
+    background: #61892F;
+    padding: 20px;
+}
+
+.aside__icon {
+    background: orange;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.aside__info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.aside__name {
+    font-size: 30px;
+    margin-top: 15px;
+}
+
+.aside__main {
+    flex: auto;
+    background: #474B4F;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.main__item {
+    margin-top: 10px;
+}
+
+.main__item button {
+    background: transparent;
+    font-size: 25px;
+    color: #fff;
+    width: 100%;
+    text-align: left;
+}
+
+.main__info {
+    flex: auto;
+    display: flex;
+    align-items: flex-end;
+}

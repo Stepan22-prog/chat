@@ -1,0 +1,18 @@
+.input-block__input {
+    font-size: 20px;
+    background: #474B4F;
+    border-radius: 15px;
+    padding: 10px 14px;
+    margin: 8px 7px 8px 10px;
+    width: 80%;
+    color: #fff;
+}
+
+.input-block__btn {
+    font-size: 20px;
+    font-weight: 700;
+    background: #61892F;
+    color: #fff;
+    border-radius: 15px;
+    padding: 10px 14px;
+}

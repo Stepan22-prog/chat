@@ -1,0 +1,7 @@
+.chats {
+    flex: 70%;
+}
+
+.chats__list {
+    margin-top: 30px;
+}

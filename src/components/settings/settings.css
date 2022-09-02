@@ -1,0 +1,52 @@
+.settings {
+    flex: 70%;
+    padding: 8px;
+}
+
+.settings__title {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 30px 0;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.form__title {
+    font-size: 25px;
+    color: #7dcf19;
+}
+
+.form__input {
+    font-size: 20px;
+    padding: 8px 15px;
+    border-radius: 15px;
+}
+
+form.status {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.error {
+    font-size: 25px;
+    color: #7dcf19;
+}
+
+.error.color_red {
+    color: red;
+}
+
+.change__status {
+    font-size: 30px;
+    background: #61892F;
+    color: #fff;
+    border-radius: 15px;
+    padding: 10px 14px;
+    margin-top: 20px;
+}

@@ -1,0 +1,21 @@
+.status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status__icon {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.status__icon.color_red {
+    background: red;
+
+}
+
+.status__icon.color_green {
+    background: green;
+}
