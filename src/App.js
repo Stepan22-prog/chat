@@ -55,8 +55,7 @@ function App() {
   const [chatUser, setChatUser] = useState([])
   const setUserMassege = (value) => {
     setChat([...chat, { id: Date.now(), user: 2, text: value }]);
-    //let socket = io()
-    //socket.emit('newMessage', { id: Date.now(), user: userData.nick, text: value })
+    socket.emit('newMessage', { id: Date.now(), user: userData.nick, text: value })
   }
   const setCurrentChat = (value) => {
     setId(3);
@@ -69,13 +68,33 @@ function App() {
       console.log(message);
       if (message[0].user1 === userData.nick) {
         setCompanion(message[0].user2);
-        setChat(message[0].text1.map(elem => elem.user = 1) ?? '');
-        setChatUser(message[0].text2.map(elem => elem.user = 2) ?? '');
+        if (message[0].text1 !== null) {
+          for (const elem of message[0].text1) {
+            elem.user = 1
+          }
+        }
+        setChat(message[0].text1 ?? '');
+        if (message[0].text2 !== null) {
+          for (const elem of message[0].text2) {
+            elem.user = 2
+          }
+        }
+        setChatUser(message[0].text2 ?? '');
         setStatus(message[0].status2 === 0 ? false : true);
       } else {
         setCompanion(message[0].user1);
-        setChat(message[0].text1.map(elem => { return elem['user'] = 1 }) ?? '');
-        setChatUser(message[0].text2.map(elem => { return elem['user'] = 2 }) ?? '');
+        if (message[0].text2 !== null) {
+          for (const elem of message[0].text2) {
+            elem.user = 2
+          }
+        }
+        setChat(message[0].text2 ?? '');
+        if (message[0].text1 !== null) {
+          for (const elem of message[0].text1) {
+            elem.user = 1
+          }
+        }
+        setChatUser(message[0].text1 ?? '');
         setStatus(message[0].status1 === 0 ? false : true);
       }
     })
@@ -103,7 +122,6 @@ function App() {
     // })
     socket.emit('listOfChats', userData.nick);
     socket.on('listOfChats', message => {
-      console.log(message);
       setListOfChats(message)
     })
   }, [id === 1])

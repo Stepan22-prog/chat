@@ -123,8 +123,7 @@ io.on("connection", (socket) => {
         baseConect('SELECT * FROM `chats2` WHERE `fromUser`= ? && `toUser`= ?', undefined, sendChat, message, [socket, 2]);
     })
     socket.on('newMessage', message => {
-        console.log(message);
-
+        baseConect('SELECT * FROM `chats2`', undefined, newMessage, [], [message])
     })
     socket.on('disconnect', () => {
         console.log(`Client with id ${socket.id} disconnected`)
@@ -138,3 +137,16 @@ const responseChat = (result, res, socket) => {
 const sendList = (result, res, socket) => {
     socket.emit('listOfChats', result)
 }
+
+const newMessage = (result, res, message) => {
+    console.log(result[0].text1);
+    if (result[0].user1 === message.user) {
+        delete message.user
+        baseConect('UPDATE `chats2` SET `text1` = ? WHERE', undefined, undefined, [...result, message], [])
+    } else {
+        delete message.user
+        baseConect('UPDATE `chats2` SET `text2` = ? WHERE', undefined, undefined, [...result, message], [])
+    }
+}
+
+/*Object.values(result[0].chat)[0].map(element => element['user'] = user === 1 ? 1 : 2)*/
