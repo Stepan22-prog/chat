@@ -111,13 +111,16 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
     console.log(`Client with id ${socket.id} connected`);
     socket.on('listOfChats', message => {
-        baseConect('SELECT * FROM `chats` WHERE `fromUser`= ? || `toUser`= ?', undefined, sendList, [message, message], [socket])
+        baseConect('SELECT * FROM `chats2` WHERE `user1`= ? || `user2`= ?', undefined, sendList, [message, message], [socket])
+    })
+    socket.on('chatRequest', message => {
+        baseConect('SELECT * FROM `chats2` WHERE `id`= ?', undefined, responseChat, [message], [socket])
     })
     socket.on('chat', message => {
-        baseConect('SELECT * FROM `chats` WHERE `fromUser`= ? && `toUser`= ?', undefined, sendChat, message, [socket, 1]);
+        baseConect('SELECT * FROM `chats2` WHERE `fromUser`= ? && `toUser`= ?', undefined, sendChat, message, [socket, 1]);
     })
     socket.on('chatCompanion', message => {
-        baseConect('SELECT * FROM `chats` WHERE `fromUser`= ? && `toUser`= ?', undefined, sendChat, message, [socket, 2]);
+        baseConect('SELECT * FROM `chats2` WHERE `fromUser`= ? && `toUser`= ?', undefined, sendChat, message, [socket, 2]);
     })
     socket.on('newMessage', message => {
         console.log(message);
@@ -128,17 +131,10 @@ io.on("connection", (socket) => {
     })
 });
 
-const sendChat = (result, res, socket, user) => {
-    let message = Object.values(result[0].chat)[0]
-    Object.values(result[0].chat)[0].map(element => element['user'] = user === 1 ? 1 : 2)
-    socket.emit(user === 1 ? 'chatUser1' : 'chatCompanion', message);
+const responseChat = (result, res, socket) => {
+    socket.emit('responseChat', result);
 }
 
 const sendList = (result, res, socket) => {
-    let message = result.filter((item, pos) => {
-        if (result[pos + 1]) {
-            return item.toUser !== result[pos].fromUser
-        }
-    });
-    socket.emit('listOfChats', message)
+    socket.emit('listOfChats', result)
 }

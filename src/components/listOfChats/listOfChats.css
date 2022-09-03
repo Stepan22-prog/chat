@@ -5,3 +5,11 @@
 .chats__list {
     margin-top: 30px;
 }
+
+.chats__list button {
+    display: block;
+    background: transparent;
+    border: none;
+    color: inherit;
+    width: 100%;
+}

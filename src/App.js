@@ -6,6 +6,7 @@ import Settings from "./components/settings/settings";
 import io from '../node_modules/socket.io/client-dist/socket.io.js';
 import ListOfChats from "./components/listOfChats/listOfChats";
 
+let socket = io();
 
 function App() {
   const [isRegister, setRegistration] = useState(false);
@@ -57,6 +58,28 @@ function App() {
     //let socket = io()
     //socket.emit('newMessage', { id: Date.now(), user: userData.nick, text: value })
   }
+  const setCurrentChat = (value) => {
+    setId(3);
+    socket.emit('chatRequest', value);
+  }
+  const [companion, setCompanion] = useState('');
+  const [status, setStatus] = useState(false)
+  useEffect(() => {
+    socket.on('responseChat', message => {
+      console.log(message);
+      if (message[0].user1 === userData.nick) {
+        setCompanion(message[0].user2);
+        setChat(message[0].text1.map(elem => elem.user = 1) ?? '');
+        setChatUser(message[0].text2.map(elem => elem.user = 2) ?? '');
+        setStatus(message[0].status2 === 0 ? false : true);
+      } else {
+        setCompanion(message[0].user1);
+        setChat(message[0].text1.map(elem => { return elem['user'] = 1 }) ?? '');
+        setChatUser(message[0].text2.map(elem => { return elem['user'] = 2 }) ?? '');
+        setStatus(message[0].status1 === 0 ? false : true);
+      }
+    })
+  }, [id === 3])
   const setData = (value) => {
     setUserData(value)
   }
@@ -66,32 +89,29 @@ function App() {
   }
   const [listOfChats, setListOfChats] = useState([])
   useEffect(() => {
-    if (id === 1) {
-      // let socket = io()
+    // let socket = io()
 
-      // socket.emit('chat', [userData.nick, 'Stepan12345'],);
-      // socket.on('chatUser1', (message) => {
-      //   console.log('Message from server: ', message)
-      //   setChat([...chat, ...message])
-      // })
-      // socket.emit('chatCompanion', 'Stepan12345');
-      // socket.on('chatCompanion', (message) => {
-      //   console.log('Message from server: ', message)
-      //   setChatUser([...chatUser, ...message])
-      // })
-      let socket = io();
-      socket.emit('listOfChats', userData.nick);
-      socket.on('listOfChats', message => {
-        console.log(message);
-        setListOfChats(message)
-      })
-    }
-  }, [id])
+    // socket.emit('chat', [userData.nick, 'Stepan12345'],);
+    // socket.on('chatUser1', (message) => {
+    //   console.log('Message from server: ', message)
+    //   setChat([...chat, ...message])
+    // })
+    // socket.emit('chatCompanion', 'Stepan12345');
+    // socket.on('chatCompanion', (message) => {
+    //   console.log('Message from server: ', message)
+    //   setChatUser([...chatUser, ...message])
+    // })
+    socket.emit('listOfChats', userData.nick);
+    socket.on('listOfChats', message => {
+      console.log(message);
+      setListOfChats(message)
+    })
+  }, [id === 1])
   return (
     <div className="App">
       <Sidebar user={userData.name} /*iconPath='./img/noImg.png'*/ setPageId={setPageId} />
-      {/*id === 1 ? <Chat status={true} setUserMassege={setUserMassege} user='Admin' chat={[...chat, ...chatUser]} /*iconPath='./img/noImg.png'*/ /*/> : null*/}
-      {id === 1 ? <ListOfChats chats={listOfChats} /> : null}
+      {id === 3 ? <Chat status={status} setUserMassege={setUserMassege} user={companion} chat={[...chat, ...chatUser]} /*iconPath='./img/noImg.png'*/ /> : null}
+      {id === 1 ? <ListOfChats chats={listOfChats} setCurrentChat={setCurrentChat} /> : null}
       {id === 2 ? <Settings isRegister={isRegister} userName={userData.name} userNick={userData.nick} userEmail={userData.email} userPassword={userData.password} serverError={error} setData={setData} /> : null}
     </div>
   );
