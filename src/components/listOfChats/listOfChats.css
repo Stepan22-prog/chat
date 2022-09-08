@@ -13,3 +13,7 @@
     color: inherit;
     width: 100%;
 }
+
+.answer__field {
+    color: yellow;
+}
