@@ -7,6 +7,7 @@ import io from '../node_modules/socket.io/client-dist/socket.io.js';
 import ListOfChats from "./components/listOfChats/listOfChats";
 
 let socket = io();
+localStorage.mobile = "mobile";
 
 function App() {
   const [isRegister, setRegistration] = useState(false);
@@ -15,15 +16,21 @@ function App() {
     nick: '',
     email: '',
     password: '',
-  })
-  localStorage.mobile = "mobile"
+  });
+  const [chat, setChat] = useState([]);
+  const [companion, setCompanion] = useState('');
+  const [status, setStatus] = useState(false);
+  const [answer, setAnswer] = useState(null);
+  const [error, setError] = useState(false);
+  const [id, setId] = useState(2);
+  const [listOfChats, setListOfChats] = useState([]);
+
   useEffect(() => {
     if (localStorage.getItem('name')) {
       setRegistration(true);
       setUserData({ name: localStorage.getItem('name'), nick: localStorage.getItem('nick'), email: localStorage.getItem('email'), password: localStorage.getItem('password') })
     }
-  }, [])
-  const [error, setError] = useState(false)
+  }, []);
   useEffect(() => {
     if (userData.name !== 'NoName') {
       fetch('/userData', {
@@ -50,14 +57,12 @@ function App() {
         })
     }
   }, [userData])
-  const [chat, setChat] = useState([])
-  const setUserMassege = (value) => {
-    setChat([...chat, { id: Date.now(), user: userData.nick, text: value }]);
-    socket.emit('newMessage', { companion: companion, text: { id: Date.now(), user: userData.nick, text: value } })
-  }
-  const [companion, setCompanion] = useState('');
-  const [status, setStatus] = useState(false);
-  const [answer, setAnswer] = useState(null);
+  useEffect(() => {
+    socket.emit('listOfChats', userData.nick);
+    socket.on('listOfChats', message => {
+      setListOfChats(message);
+    })
+  }, [id])
   useEffect(() => {
     socket.on('userConection', () => {
       if (userData.nick !== '' && userData.nick) {
@@ -66,7 +71,6 @@ function App() {
     })
     socket.on('updateStatus', message => {
       setStatus(message.status);
-      console.log(message.st);
     })
     socket.on('newMessage', message => {
       if (chat.length !== 0) {
@@ -94,9 +98,15 @@ function App() {
       }
     })
   })
+
+  const setUserMassege = (value) => {
+    setChat([...chat, { id: Date.now(), user: userData.nick, text: value }]);
+    socket.emit('newMessage', { companion: companion, text: { id: Date.now(), user: userData.nick, text: value } })
+  }
   const setCurrentChat = (value) => {
     setId(3);
     socket.emit('chatRequest', value);
+    console.log(value);
   }
   const setData = (value) => {
     setUserData(value)
@@ -105,17 +115,10 @@ function App() {
     console.log(value);
     socket.emit('createChat', { user1: userData.nick, user2: value });
   }
-  const [id, setId] = useState(2)
   const setPageId = (pageId) => {
     setId(pageId);
   }
-  const [listOfChats, setListOfChats] = useState([])
-  useEffect(() => {
-    socket.emit('listOfChats', userData.nick);
-    socket.on('listOfChats', message => {
-      setListOfChats(message);
-    })
-  }, [id === 1])
+
   return (
     <div className="App">
       <Sidebar user={userData.name} /*iconPath='./img/noImg.png'*/ setPageId={setPageId} />

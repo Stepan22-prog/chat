@@ -4,6 +4,9 @@ import './chat.css'
 import Input from '../input_field/input';
 
 const Chat = ({ chat, setUserMassege, user, status }) => {
+    if (!chat) {
+        chat = [];
+    }
     chat.sort((a, b) => a.id - b.id)
     return (
         <div className="chat">

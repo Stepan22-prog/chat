@@ -187,7 +187,7 @@ const checkUser = (result, res, message, socket) => {
 }
 const createUser = (result, res, message, socket) => {
     if (result.length == 0) {
-        baseConect('INSERT INTO `chats2`(`id`, `user1`, `status1`, `user1Id`, `user2`, `status2`, `user2Id`, `text`) VALUES (?,?,?,?,?,?,?,?)', undefined, undefined, [Date.now(), message.user1, 1, socket.id, message.user2, 0, null, null], []);
+        baseConect('INSERT INTO `chats2`(`id`, `user1`, `status1`, `user1Id`, `user2`, `status2`, `user2Id`, `text`) VALUES (?,?,?,?,?,?,?,?)', undefined, undefined, [Date.now(), message.user1, 1, socket.id, message.user2, 0, null, JSON.stringify([])], []);
         socket.emit('createUser', { error: false, text: { id: Date.now(), user1: message.user2, status: 0 } })
     } else {
         socket.emit('createUser', { error: true, text: 'You already have a chat with this user' })
