@@ -4,6 +4,16 @@
     flex-direction: column;
 }
 
+.aside-enter-done+.chat {
+    margin-left: 15%;
+    transition: margin 300ms;
+}
+
+.aside-exit+.chat {
+    margin-left: 0;
+    transition: margin 300ms;
+}
+
 .chat__field {
     flex: auto;
     display: flex;
@@ -23,7 +33,7 @@
 
 .field__text {
     background: #61892F;
-    max-width: 40%;
+    max-width: 70%;
     padding: 8px 14px;
     font-size: 20px;
     border-radius: 15px;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import UserInfo from '../global/userInfo';
 import './chat.css'
 import Input from '../input_field/input';

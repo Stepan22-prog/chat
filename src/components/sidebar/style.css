@@ -1,4 +1,4 @@
-aside {
+.aside {
     flex: 25%;
     border-right: 2px solid #000;
     height: 100%;
@@ -10,6 +10,31 @@ aside {
 .aside__header {
     background: #61892F;
     padding: 20px;
+    min-height: 72px;
+}
+
+.aside__burger {
+    display: none;
+    width: 30px;
+    position: absolute;
+}
+
+.aside__burger::after,
+.aside__burger::before {
+    display: block;
+    content: '';
+    height: 4px;
+    background: #fff;
+    border-radius: 3px;
+}
+
+.aside-burger__span {
+    border-radius: 3px;
+    height: 4px;
+    background: #fff;
+    display: block;
+    width: 100%;
+    margin: 5px 0;
 }
 
 .aside__icon {
@@ -39,18 +64,96 @@ aside {
 
 .main__item {
     margin-top: 10px;
-}
-
-.main__item button {
-    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 25px;
-    color: #fff;
-    width: 100%;
-    text-align: left;
 }
 
 .main__info {
     flex: auto;
     display: flex;
     align-items: flex-end;
+}
+
+@media (max-width: 767px) {
+
+    .aside__icon,
+    .aside__name,
+    .main-item__text,
+    .main__info {
+        display: none;
+    }
+
+    .aside {
+        flex: 5%;
+    }
+
+    .aside-enter {
+        width: 5%;
+    }
+
+    .aside-enter-done {
+        width: 70%;
+        position: absolute;
+        transition: width 600ms;
+    }
+
+    .aside-exit {
+        width: 70%;
+        position: absolute;
+    }
+
+    .aside-exit-active {
+        width: 5%;
+        transition: width 600ms;
+    }
+
+    .aside-exit-done {
+        width: 5%;
+        flex: 5%;
+    }
+
+    .aside__header {
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .main__item {
+        justify-content: center;
+    }
+
+    .main__item span {
+        font-size: 30px;
+    }
+
+    .aside-enter-done .main-item__text,
+    .aside-enter-done .aside__icon,
+    .aside-enter-done .aside__name {
+        display: block;
+    }
+
+    .aside-enter-done .aside__header {
+        flex-direction: column;
+    }
+
+    .aside-enter-done .aside-burger__span {
+        display: none;
+    }
+
+    .aside-enter-done .aside__burger::after {
+        transform: rotate(45deg);
+        transition: transform 600ms ease;
+    }
+
+    .aside-enter-done .aside__burger::before {
+        transform: rotate(-45deg);
+        transition: transform 600ms ease;
+    }
+
+    .aside__burger {
+        display: block;
+    }
 }

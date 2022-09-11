@@ -11,8 +11,8 @@ const Input = ({ setUserMassege, buttonText }) => {
     }
     return (
         <div className="input-block">
-            <input className='input-block__input' placeholder='Type smth...' value={value} onChange={(event) => setValue(event.target.value)} type="text" />
-            <button className='input-block__btn' onClick={onButton}>{buttonText}</button>
+            <textarea className='input-block__input' placeholder='Type smth...' value={value} onChange={(event) => setValue(event.target.value)} type="text" />
+            <button className='input-block__btn' onClick={onButton}><span className='input-block-btn__text'>{buttonText}</span><span className="input-block-btn__arrow"></span></button>
         </div>
     );
 }

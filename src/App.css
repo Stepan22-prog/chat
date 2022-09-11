@@ -103,3 +103,7 @@ body {
     height: 100%;
     display: flex;
 }
+
+textarea {
+    resize: none;
+}
