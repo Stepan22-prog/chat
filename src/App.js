@@ -17,161 +17,12 @@ function App() {
     email: '',
     password: '',
   });
-  const [chat, setChat] = useState([{
-    "id": 12345,
-    "text": "Hello",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 12346,
-    "text": "It`s creator of this app",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 12347,
-    "text": "You can ask me a question",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 43534,
-    "text": "Hello world",
-    "user": "spicy"
-  },
-  {
-    "id": 1662278454097,
-    "text": "I have",
-    "user": "spicy"
-  },
-  {
-    "id": 1662280345252,
-    "text": "Ddfcfcc",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 1662303366247,
-    "text": "It's me",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 1662453777416,
-    "text": "last mess",
-    "user": "spicy"
-  },
-  {
-    "id": 1662456893660,
-    "text": "test",
-    "user": "spicy"
-  },
-  {
-    "id": 1662456969255,
-    "text": "fgfg",
-    "user": "spicy"
-  },
-  {
-    "id": 1662458241960,
-    "text": "qwerty",
-    "user": "spicy"
-  },
-  {
-    "id": 1662477324118,
-    "text": "How",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 1662477332835,
-    "text": "nice",
-    "user": "spicy"
-  },
-  {
-    "id": 1662479366343,
-    "text": "fail2",
-    "user": "spicy"
-  },
-  {
-    "id": 1662632185849,
-    "text": "Норм",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 12345,
-    "text": "Hello",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 12346,
-    "text": "It`s creator of this app",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 12347,
-    "text": "You can ask me a question",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 43534,
-    "text": "Hello world",
-    "user": "spicy"
-  },
-  {
-    "id": 1662278454097,
-    "text": "I have",
-    "user": "spicy"
-  },
-  {
-    "id": 1662280345252,
-    "text": "Ddfcfcc",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 1662303366247,
-    "text": "It's me",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 1662453777416,
-    "text": "last mess",
-    "user": "spicy"
-  },
-  {
-    "id": 1662456893660,
-    "text": "test",
-    "user": "spicy"
-  },
-  {
-    "id": 1662456969255,
-    "text": "fgfg",
-    "user": "spicy"
-  },
-  {
-    "id": 1662458241960,
-    "text": "qwerty",
-    "user": "spicy"
-  },
-  {
-    "id": 1662477324118,
-    "text": "How",
-    "user": "Stepan12345"
-  },
-  {
-    "id": 1662477332835,
-    "text": "nice",
-    "user": "spicy"
-  },
-  {
-    "id": 1662479366343,
-    "text": "fail2",
-    "user": "spicy"
-  },
-  {
-    "id": 1662632185849,
-    "text": "Норм",
-    "user": "Stepan12345"
-  }]);
+  const [chat, setChat] = useState([]);
   const [companion, setCompanion] = useState('');
   const [status, setStatus] = useState(false);
   const [answer, setAnswer] = useState(null);
   const [error, setError] = useState(false);
-  const [id, setId] = useState(3);
+  const [id, setId] = useState(2);
   const [listOfChats, setListOfChats] = useState([]);
 
   useEffect(() => {
@@ -235,8 +86,8 @@ function App() {
         setCompanion(message[0].user1);
         message[0].status1 === 0 ? setStatus(false) : setStatus(true);
       }
-      const chatField = document.querySelector('.chat__field');
-      chatField.scrollTo(0, chatField.clientHeight);
+      //const chatField = document.querySelector('.chat__field');
+      //chatField.scrollTo(0, chatField.clientHeight);
     })
     socket.on('createUser', message => {
       if (listOfChats.length !== 0) {

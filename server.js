@@ -148,11 +148,11 @@ const newMessage = (result, res, message, socket) => {
             baseConect('UPDATE `chats2` SET `text` = ? WHERE `user1`=? && `user2`=?', undefined, undefined, [JSON.stringify([...chat.text, message.text]), message.companion, message.text.user], [])
             chat.user1Id !== null ? socket.to(chat.user1Id).emit('newMessage', message.text) : null;
             socket.to(chat.user2Id).emit('newMessage', message.text);
+            console.log(chat.text);
         } else {
             chat.user2Id !== null ? socket.to(chat.user2Id).emit('newMessage', message.text) : null;
-            if (chat.text) {
-                baseConect('UPDATE `chats2` SET `text` = ? WHERE `user2`=? && `user1`=?', undefined, undefined, [JSON.stringify([...chat.text, message.text]), message.companion, message.text.user], []);
-            }
+            console.log(chat.text);
+            baseConect('UPDATE `chats2` SET `text` = ? WHERE `user2`=? && `user1`=?', undefined, undefined, [JSON.stringify([...chat.text, message.text]), message.companion, message.text.user], []);
         }
     }
 }

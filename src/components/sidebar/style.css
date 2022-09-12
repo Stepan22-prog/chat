@@ -68,6 +68,26 @@
     align-items: center;
     gap: 10px;
     font-size: 25px;
+    cursor: pointer;
+}
+
+.main__item:active {
+    animation-name: move;
+    animation-duration: 0.3s;
+}
+
+@keyframes move {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(8px, 0);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
 }
 
 .main__info {
@@ -115,7 +135,7 @@
     }
 
     .aside__header {
-        padding: 0;
+        padding: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -137,6 +157,11 @@
 
     .aside-enter-done .aside__header {
         flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .aside-enter-done .aside__burger {
+        left: 90%;
     }
 
     .aside-enter-done .aside-burger__span {
