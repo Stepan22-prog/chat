@@ -108,13 +108,11 @@ function App() {
   const setCurrentChat = (value) => {
     setId(3);
     socket.emit('chatRequest', value);
-    console.log(value);
   }
   const setData = (value) => {
     setUserData(value)
   }
   const createChat = (value) => {
-    console.log(value);
     socket.emit('createChat', { user1: userData.nick, user2: value });
   }
   const setPageId = (pageId) => {

@@ -84,7 +84,6 @@ const baseConect = (typeOfQuerry, res, someFunction, params, paramsForFunc) => {
 const createOrLogIn = (result, res, bodyParse) => {
     let checkUser = result.find(element => (element.nick === bodyParse.nick && element.email === bodyParse.email && element.password === bodyParse.password))
     if (checkUser) {
-        console.log('succes');
         res.writeHead(200, {
             "Content-Type": `text/plain`
         });
@@ -102,7 +101,6 @@ const createOrLogIn = (result, res, bodyParse) => {
             baseConect('INSERT INTO `users`(`id`, `name`, `nick`, `email`, `password`) VALUES (?,?,?,?,?)', res, undefined, [result.length + 1, bodyParse.name, bodyParse.nick, bodyParse.email, bodyParse.password], []);
             res.end('created');
         }
-        console.log('veryGood');
     }
 }
 //websocet
@@ -123,7 +121,7 @@ io.on("connection", (socket) => {
         baseConect('SELECT * FROM `chats2` WHERE `id`= ?', undefined, responseChat, [message], [socket])
     })
     socket.on('newMessage', message => {
-        baseConect('SELECT * FROM `chats2`', undefined, newMessage, [], [message, socket])
+        baseConect('SELECT * FROM `chats2`', undefined, newMessage, [message.companion,], [message, socket])
     })
     socket.on('createChat', message => {
         baseConect('SELECT * FROM `users` WHERE `nick`=?', undefined, checkUser, [message.user2], [message, socket])
@@ -148,10 +146,8 @@ const newMessage = (result, res, message, socket) => {
             baseConect('UPDATE `chats2` SET `text` = ? WHERE `user1`=? && `user2`=?', undefined, undefined, [JSON.stringify([...chat.text, message.text]), message.companion, message.text.user], [])
             chat.user1Id !== null ? socket.to(chat.user1Id).emit('newMessage', message.text) : null;
             socket.to(chat.user2Id).emit('newMessage', message.text);
-            console.log(chat.text);
-        } else {
+        } else if (chat.user2 === message.companion && chat.user1 === message.text.user) {
             chat.user2Id !== null ? socket.to(chat.user2Id).emit('newMessage', message.text) : null;
-            console.log(chat.text);
             baseConect('UPDATE `chats2` SET `text` = ? WHERE `user2`=? && `user1`=?', undefined, undefined, [JSON.stringify([...chat.text, message.text]), message.companion, message.text.user], []);
         }
     }
